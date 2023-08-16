@@ -7,14 +7,10 @@ import lombok.Data;
 
 @Data
 public class UserResponseDTO {
-    @NotBlank
-    @Size(min = 3, max = 155)
-    private String name;
-    @NotBlank
+    private String firstName;
+    private String lastName;
     private String email;
-    @NotBlank
     private Role role;
-
 
 }
 

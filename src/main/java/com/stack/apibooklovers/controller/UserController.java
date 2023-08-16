@@ -1,5 +1,6 @@
 package com.stack.apibooklovers.controller;
 
+import com.stack.apibooklovers.domain.user.UserForm;
 import com.stack.apibooklovers.domain.user.UserResponseDTO;
 import com.stack.apibooklovers.service.UserService;
 import jakarta.validation.Valid;
@@ -21,22 +22,22 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<UserResponseDTO>> getAllUser() {
-        return ResponseEntity.ok().body(userService.getAllUsers().getBody());
+        return ResponseEntity.ok(userService.getAllUsers().getBody());
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> getUserById(@Valid @PathVariable Long id) throws Exception {
+
+    public ResponseEntity<UserResponseDTO> getUserById(@Valid @PathVariable Long id) {
         UserResponseDTO user = userService.getUserById(id);
-        if (user == null) return ResponseEntity.status(404).build();
-        return ResponseEntity.status(200).body(user);
+        return ResponseEntity.ok(user);
     }
 
     @PostMapping
-    public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserResponseDTO userDTO) {
-        UserResponseDTO createdUser = userService.createUser(userDTO);
-        return ResponseEntity.status(201).body(createdUser);
+    public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserForm userForm) {
+        return ResponseEntity.status(201).body(userService.createUser(userForm).getBody());
     }
+
 
     @PostMapping("/{userId}/books/{bookId}")
     public ResponseEntity<UserResponseDTO> addBookToFavorites(@PathVariable Long userId, @PathVariable Long bookId) {
