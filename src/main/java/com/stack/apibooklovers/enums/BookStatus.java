@@ -1,4 +1,4 @@
-package enums;
+package com.stack.apibooklovers.enums;
 
 public enum BookStatus {
     TO_READ,

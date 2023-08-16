@@ -1,6 +1,6 @@
-package domain.book;
+package com.stack.apibooklovers.domain.book;
 
-import enums.BookStatus;
+import com.stack.apibooklovers.enums.BookStatus;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 

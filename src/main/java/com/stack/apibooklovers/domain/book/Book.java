@@ -1,18 +1,19 @@
-package domain.book;
+package com.stack.apibooklovers.domain.book;
 
 
-import domain.author.Author;
-import domain.user.User;
-import enums.BookStatus;
+import com.stack.apibooklovers.domain.author.Author;
+import com.stack.apibooklovers.domain.user.User;
+import com.stack.apibooklovers.enums.BookStatus;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.List;
 
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Getter
+@Setter
+@EqualsAndHashCode
+@Entity(name = "en_book")
 @Table(name = "tb_book")
 public class Book {
     @Id
@@ -29,3 +30,5 @@ public class Book {
 
 
 }
+
+

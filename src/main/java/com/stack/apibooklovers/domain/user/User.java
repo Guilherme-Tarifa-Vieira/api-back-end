@@ -1,7 +1,7 @@
-package domain.user;
+package com.stack.apibooklovers.domain.user;
 
-import domain.book.Book;
-import enums.Role;
+import com.stack.apibooklovers.enums.Role;
+import com.stack.apibooklovers.domain.book.Book;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,8 +9,11 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "tb_user")
+@Getter
+@Setter
+@EqualsAndHashCode
+@Entity(name = "en_users")
+@Table(name = "tb_users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +26,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany
     private List<Book> books;
+
 
 }

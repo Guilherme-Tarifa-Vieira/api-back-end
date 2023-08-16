@@ -1,6 +1,6 @@
-package domain.user;
+package com.stack.apibooklovers.domain.user;
 
-import enums.Role;
+import com.stack.apibooklovers.enums.Role;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -12,9 +12,9 @@ public class UserResponseDTO {
     private String name;
     @NotBlank
     private String email;
-
     @NotBlank
     private Role role;
 
 
 }
+
