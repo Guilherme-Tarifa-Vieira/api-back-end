@@ -1,5 +1,6 @@
 package com.stack.apibooklovers.service;
 
+import com.stack.apibooklovers.domain.user.UserForm;
 import com.stack.apibooklovers.domain.user.UserResponseDTO;
 import org.springframework.http.ResponseEntity;
 
@@ -9,9 +10,10 @@ public interface UserService {
 
     ResponseEntity<List<UserResponseDTO>> getAllUsers();
 
-    UserResponseDTO getUserById(Long id) throws Exception;
+    UserResponseDTO getUserById(Long id);
 
-    UserResponseDTO createUser(UserResponseDTO userDTO);
+
+    ResponseEntity<UserResponseDTO> createUser(UserForm user);
 
     UserResponseDTO addBookToFavorites(Long userId, Long bookId);
 }
