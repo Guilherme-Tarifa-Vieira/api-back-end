@@ -1,7 +1,7 @@
 package com.stack.apibooklovers.domain.user;
 
-import com.stack.apibooklovers.enums.Role;
 import com.stack.apibooklovers.domain.book.Book;
+import com.stack.apibooklovers.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,8 +12,8 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode
-@Entity(name = "en_users")
-@Table(name = "tb_users")
+@Entity
+@Table(name = "tb_user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,4 +33,14 @@ public class User {
     private List<Book> books;
 
 
+    public User(String firstName, String lastName, String email, String password, Role role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
 }
+
+

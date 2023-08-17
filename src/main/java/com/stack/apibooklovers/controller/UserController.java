@@ -2,7 +2,7 @@ package com.stack.apibooklovers.controller;
 
 import com.stack.apibooklovers.domain.user.UserForm;
 import com.stack.apibooklovers.domain.user.UserResponseDTO;
-import com.stack.apibooklovers.service.UserService;
+import com.stack.apibooklovers.service.userService.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,10 +27,8 @@ public class UserController {
 
 
     @GetMapping("/{id}")
-
     public ResponseEntity<UserResponseDTO> getUserById(@Valid @PathVariable Long id) {
-        UserResponseDTO user = userService.getUserById(id);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @PostMapping
@@ -41,9 +39,9 @@ public class UserController {
 
     @PostMapping("/{userId}/books/{bookId}")
     public ResponseEntity<UserResponseDTO> addBookToFavorites(@PathVariable Long userId, @PathVariable Long bookId) {
-        UserResponseDTO userWithAddedBook = userService.addBookToFavorites(userId, bookId);
-        return ResponseEntity.ok(userWithAddedBook);
+        return ResponseEntity.ok(userService.addBookToFavorites(userId, bookId));
     }
+
 
 }
 

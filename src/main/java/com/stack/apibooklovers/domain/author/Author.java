@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode
-@Entity(name = "en_author")
+@Entity
 @Table(name = "tb_author")
 public class Author {
     @Id

@@ -1,4 +1,4 @@
-package com.stack.apibooklovers.service;
+package com.stack.apibooklovers.service.userService;
 
 import com.stack.apibooklovers.domain.user.UserForm;
 import com.stack.apibooklovers.domain.user.UserResponseDTO;

@@ -13,7 +13,7 @@ import lombok.*;
 @Getter
 @Setter
 @EqualsAndHashCode
-@Entity(name = "en_book")
+@Entity
 @Table(name = "tb_book")
 public class Book {
     @Id
@@ -22,11 +22,21 @@ public class Book {
     private String title;
     @ManyToOne
     private Author author;
+    @Column(unique = true)
+    private String isbn;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User users;
     @Enumerated(EnumType.STRING)
     private BookStatus status;
+
+
+    public Book(String title, Author author, String isbn, BookStatus status) {
+        this.title = title;
+        this.author = author;
+        this.isbn = isbn;
+        this.status = status;
+    }
 
 
 }

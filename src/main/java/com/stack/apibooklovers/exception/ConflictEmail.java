@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.CONFLICT)
 public class ConflictEmail extends RuntimeException {
-
     public ConflictEmail(String message) {
         super(message);
     }
 }
+
