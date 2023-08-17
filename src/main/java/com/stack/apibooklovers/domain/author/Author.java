@@ -4,6 +4,7 @@ import com.stack.apibooklovers.domain.book.Book;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
@@ -17,6 +18,8 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
+    private LocalDate birth_day;
     @OneToMany
     List<Book> books;
 

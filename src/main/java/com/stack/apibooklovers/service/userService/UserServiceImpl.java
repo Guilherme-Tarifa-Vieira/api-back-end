@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -30,7 +29,7 @@ public class UserServiceImpl implements UserService {
     public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
         List<User> users = userRepository.findAll();
         if (users.isEmpty()) throw new NoContentList("Lista vazia!");
-        return ResponseEntity.status(200).body(users.stream().map(Mapper::UserMapperDTO).collect(Collectors.toList()));
+        return ResponseEntity.status(200).body(users.stream().map(Mapper::UserMapperDTO).toList());
     }
 
 
@@ -46,14 +45,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<UserResponseDTO> createUser(UserForm userForm) {
         Optional<User> op = userRepository.findUserByEmail(userForm.getEmail());
-        if (op.isPresent())
-            throw new ConflictEmail("Email já cadastrado!");
-        User newUser = new User(
-                userForm.getFirstName(),
-                userForm.getLastName(),
-                userForm.getEmail(),
-                userForm.getPassword(),
-                userForm.getRole());
+        if (op.isPresent()) throw new ConflictEmail("Email já cadastrado!");
+        User newUser = new User(userForm.getFirstName(), userForm.getLastName(), userForm.getEmail(), userForm.getPassword(), userForm.getRole());
 
         userRepository.save(newUser);
         return ResponseEntity.status(201).body(Mapper.UserMapperDTO(newUser));

@@ -8,12 +8,16 @@ import com.stack.apibooklovers.exception.ConflictIsbn;
 import com.stack.apibooklovers.exception.NoContentList;
 import com.stack.apibooklovers.mapper.Mapper;
 import com.stack.apibooklovers.repository.BookRepository;
+import com.stack.apibooklovers.specification.BookSpecification;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -26,12 +30,14 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public ResponseEntity<List<BookResponseDTO>> getAllBooks() {
-        List<Book> books = bookRepository.findAll();
-        if (books.isEmpty())
-            throw new NoContentList("Lista vazia");
-        return ResponseEntity.status(200).body(books.stream().map(Mapper::BookMapperDTO).collect(Collectors.toList()));
+    public ResponseEntity<Page<BookResponseDTO>> getAllBooks(Pageable pageable) {
+        Page<Book> books = bookRepository.findAll(pageable);
+        if (books.isEmpty()) throw new NoContentList("Lista vazia");
+        List<BookResponseDTO> bookDto = books.getContent().stream().map(Mapper::BookMapperDTO).toList();
+        Page<BookResponseDTO> response = new PageImpl<>(bookDto, pageable, books.getTotalElements());
+        return ResponseEntity.status(200).body(response);
     }
+
 
     @Override
     public ResponseEntity<BookResponseDTO> getBookById(Long id) {
@@ -45,19 +51,25 @@ public class BookServiceImpl implements BookService {
     @Override
     public ResponseEntity<BookResponseDTO> createBook(BookForm form) {
         Optional<Book> opt = bookRepository.findByIsbn(form.getIsbn());
-        if (opt.isPresent())
-            throw new ConflictIsbn("ISBN já cadastrado!");
+        if (opt.isPresent()) throw new ConflictIsbn("ISBN já cadastrado!");
 
-        Book newBook = new Book(
-                form.getTitle(),
-                form.getAuthor(),
-                form.getIsbn(),
-                form.getStatus()
-        );
+        Book newBook = new Book(form.getTitle(), form.getAuthor(), form.getIsbn(), form.getStatus());
         bookRepository.save(newBook);
         return ResponseEntity.status(201).body(Mapper.BookMapperDTO(newBook));
     }
+
+
+    @Override
+    public ResponseEntity<Page<BookResponseDTO>> filter(String title, Pageable pageable) {
+        Specification<Book> specification = Specification.where(title != null ? BookSpecification.titleLike(title) : null);
+        Page<Book> books = bookRepository.findAll(specification, pageable);
+        if (books.isEmpty()) throw new NoContentList("Sem nenhum resultado!");
+        List<BookResponseDTO> booksDto = books.getContent().stream().map(Mapper::BookMapperDTO).toList();
+        Page<BookResponseDTO> response = new PageImpl<>(booksDto, pageable, books.getTotalElements());
+        return ResponseEntity.ok(response);
+    }
 }
+
 
 
 
