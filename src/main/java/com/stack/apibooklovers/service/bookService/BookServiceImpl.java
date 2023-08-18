@@ -1,5 +1,6 @@
 package com.stack.apibooklovers.service.bookService;
 
+import com.stack.apibooklovers.domain.author.Author;
 import com.stack.apibooklovers.domain.book.Book;
 import com.stack.apibooklovers.domain.book.BookForm;
 import com.stack.apibooklovers.domain.book.BookResponseDTO;
@@ -8,6 +9,7 @@ import com.stack.apibooklovers.exception.ConflictIsbn;
 import com.stack.apibooklovers.exception.NoContentList;
 import com.stack.apibooklovers.mapper.Mapper;
 import com.stack.apibooklovers.repository.BookRepository;
+import com.stack.apibooklovers.service.authorService.AuthorService;
 import com.stack.apibooklovers.specification.BookSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -24,9 +26,11 @@ public class BookServiceImpl implements BookService {
 
 
     private final BookRepository bookRepository;
+    private final AuthorService authorService;
 
-    public BookServiceImpl(BookRepository bookRepository) {
+    public BookServiceImpl(BookRepository bookRepository, AuthorService authorService) {
         this.bookRepository = bookRepository;
+        this.authorService = authorService;
     }
 
     @Override
@@ -50,11 +54,20 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public ResponseEntity<BookResponseDTO> createBook(BookForm form) {
-        Optional<Book> opt = bookRepository.findByIsbn(form.getIsbn());
-        if (opt.isPresent()) throw new ConflictIsbn("ISBN já cadastrado!");
+        Long authorId = form.getAuthor();
 
-        Book newBook = new Book(form.getTitle(), form.getAuthor(), form.getIsbn(), form.getStatus());
+        ResponseEntity<Author> authorResponseEntity = authorService.findAuthorById(authorId);
+        Author author = authorResponseEntity.getBody();
+
+
+        Optional<Book> optBook = bookRepository.findByIsbn(form.getIsbn());
+        if (optBook.isPresent()) throw new ConflictIsbn("ISBN já cadastrado!");
+
+
+        Book newBook = new Book(form.getTitle(), author, form.getIsbn(), form.getStatus());
+
         bookRepository.save(newBook);
+
         return ResponseEntity.status(201).body(Mapper.BookMapperDTO(newBook));
     }
 

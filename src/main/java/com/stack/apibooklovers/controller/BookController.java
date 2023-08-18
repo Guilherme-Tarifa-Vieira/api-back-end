@@ -23,7 +23,9 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<BookResponseDTO>> getAllBooks(@ParameterObject @PageableDefault(size = 2, sort = "title", direction = Sort.Direction.DESC) Pageable pageable) {
+    public ResponseEntity<Page<BookResponseDTO>> getAllBooks(
+            @ParameterObject
+            @PageableDefault(size = 20, sort = "title", direction = Sort.Direction.DESC) Pageable pageable) {
         return ResponseEntity.ok(bookService.getAllBooks(pageable).getBody());
     }
 

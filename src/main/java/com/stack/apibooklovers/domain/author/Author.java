@@ -1,5 +1,7 @@
 package com.stack.apibooklovers.domain.author;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.stack.apibooklovers.domain.book.Book;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,9 +22,15 @@ public class Author {
     private Long id;
     private String name;
     private LocalDate birth_day;
-    @OneToMany
+    @OneToMany(mappedBy = "author")
+    @JsonIgnoreProperties("author")
+    @JsonIgnore
     List<Book> books;
 
+    public Author(String name, LocalDate birth_day) {
+        this.name = name;
+        this.birth_day = birth_day;
+    }
 
 }
 

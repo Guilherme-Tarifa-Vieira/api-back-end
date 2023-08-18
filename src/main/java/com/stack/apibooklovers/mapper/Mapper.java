@@ -1,5 +1,7 @@
 package com.stack.apibooklovers.mapper;
 
+import com.stack.apibooklovers.domain.author.Author;
+import com.stack.apibooklovers.domain.author.AuthorResponseDTO;
 import com.stack.apibooklovers.domain.book.Book;
 import com.stack.apibooklovers.domain.book.BookResponseDTO;
 import com.stack.apibooklovers.domain.user.User;
@@ -15,6 +17,7 @@ public class Mapper {
         dto.setLastName(user.getLastName());
         dto.setEmail(user.getEmail());
         dto.setRole(user.getRole());
+        dto.setBooks(user.getBooks());
         return dto;
     }
 
@@ -26,6 +29,14 @@ public class Mapper {
         dto.setIsbn(book.getIsbn());
         dto.setAuthor(book.getAuthor());
         dto.setStatus(book.getStatus());
+        return dto;
+    }
+
+    public static AuthorResponseDTO AuthorMapperDTO(Author author) {
+        AuthorResponseDTO dto = new AuthorResponseDTO();
+        dto.setId(author.getId());
+        dto.setName(author.getName());
+        dto.setBirth_day(author.getBirth_day());
         return dto;
     }
 

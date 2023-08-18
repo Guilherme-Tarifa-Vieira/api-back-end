@@ -1,9 +1,10 @@
 package com.stack.apibooklovers.domain.user;
 
+import com.stack.apibooklovers.domain.book.Book;
 import com.stack.apibooklovers.enums.Role;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class UserResponseDTO {
@@ -12,6 +13,8 @@ public class UserResponseDTO {
     private String lastName;
     private String email;
     private Role role;
+    private List<Book> books;
+
 
 }
 

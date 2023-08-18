@@ -1,11 +1,15 @@
 package com.stack.apibooklovers.domain.book;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.stack.apibooklovers.domain.author.Author;
 import com.stack.apibooklovers.domain.user.User;
 import com.stack.apibooklovers.enums.BookStatus;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 
 @NoArgsConstructor
@@ -19,16 +23,24 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "title")
     private String title;
     @ManyToOne
     @JoinColumn(name = "author_id")
+    @JsonIgnoreProperties("books")
+    @JsonIgnore
     private Author author;
-    @Column(unique = true)
+    @Column(name = "isbn", unique = true)
     private String isbn;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User users;
+    @ManyToMany
+    @JoinTable(
+            name = "tb_book_user_favorites",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> users;
     @Enumerated(EnumType.STRING)
+    @Column(name = "status")
     private BookStatus status;
 
 
