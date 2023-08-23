@@ -1,9 +1,8 @@
 package com.stack.apibooklovers.domain.book;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.stack.apibooklovers.domain.author.Author;
+import com.stack.apibooklovers.domain.publishing.PublishingCompany;
 import com.stack.apibooklovers.domain.user.User;
 import com.stack.apibooklovers.enums.BookStatus;
 import jakarta.persistence.*;
@@ -27,9 +26,11 @@ public class Book {
     private String title;
     @ManyToOne
     @JoinColumn(name = "author_id")
-    @JsonIgnoreProperties("books")
-    @JsonIgnore
     private Author author;
+
+    @ManyToOne
+    @JoinColumn(name = "publishing_company_id")
+    private PublishingCompany publishingCompany;
     @Column(name = "isbn", unique = true)
     private String isbn;
     @ManyToMany

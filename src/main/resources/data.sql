@@ -9,13 +9,23 @@ CREATE TABLE tb_user
     CONSTRAINT pk_user PRIMARY KEY (ID)
 
 );
+CREATE TABLE tb_publishing_company
+(
+    id        BIGINT AUTO_INCREMENT NOT NULL,
+    name      VARCHAR(255)          NOT NULL,
+    adress    VARCHAR(255)          NOT NULL,
+    telephone INT                   NOT NULL,
+
+
+    CONSTRAINT pk_publishing_company PRIMARY KEY (id)
+);
 
 CREATE TABLE tb_author
 (
     id        BIGINT AUTO_INCREMENT NOT NULL,
     name      VARCHAR(155)          NOT NULL,
     birth_day DATE                  NULL,
-    CONSTRAINT pk_author PRIMARY KEY (ID)
+    CONSTRAINT pk_author PRIMARY KEY (id)
 );
 
 CREATE TABLE tb_book
@@ -46,28 +56,38 @@ ALTER TABLE tb_book
     ADD CONSTRAINT fk_author FOREIGN KEY (author_id) REFERENCES tb_author (id);
 
 
+ALTER TABLE tb_book
+    ADD COLUMN publishing_company_id BIGINT NULL;
 
-INSERT INTO tb_author(id, name, birth_day)
-VALUES (1, 'Stephen King', '2018-07-07');
-INSERT INTO tb_author(id, name, birth_day)
-VALUES (2, 'J.K. Rolling', '2018-07-07');
-INSERT INTO tb_author(id, name, birth_day)
-VALUES (3, 'Georgie R.R. Martin', '2018-07-07');
-INSERT INTO tb_author(id, name, birth_day)
-VALUES (4, 'Rick Riordan', '2018-07-07');
-INSERT INTO tb_author(id, name, birth_day)
-VALUES (5, 'James Dashner', '2018-07-07');
+ALTER TABLE tb_book
+    ADD CONSTRAINT fk_publishing_company FOREIGN KEY (publishing_company_id) REFERENCES tb_publishing_company (id);
 
-INSERT INTO tb_user(id, first_name, last_name, email, password, role)
-VALUES (1, 'Guilherme', 'Tarifa', 'Vieira@gmail.gloob', '1234554', 'MANAGER');
 
-INSERT INTO tb_book(id, title, author_id, isbn, status)
-VALUES (1, 'Salem', 1, '23124132.32123', 'READING');
-INSERT INTO tb_book(id, title, author_id, isbn, status)
-VALUES (2, 'Harry Potter e a Câmara Secreta', 2, '23111111.31111', 'TO_READ');
-INSERT INTO tb_book(id, title, author_id, isbn, status)
-VALUES (3, 'A Dança dos Dragões', 3, '222224132.322222', 'READ');
-INSERT INTO tb_book(id, title, author_id, isbn, status)
-VALUES (4, 'Filho de Netuno', 4, '333333333.333333', 'READ');
-INSERT INTO tb_book(id, title, author_id, isbn, status)
-VALUES (5, 'Maze Runner', 5, '2344443211.32444', 'TO_READ');
+
+INSERT INTO tb_author(name, birth_day)
+VALUES ('Stephen King', '2018-07-07');
+INSERT INTO tb_author(name, birth_day)
+VALUES ('J.K. Rolling', '2018-07-07');
+INSERT INTO tb_author(name, birth_day)
+VALUES ('Georgie R.R. Martin', '2018-07-07');
+INSERT INTO tb_author(name, birth_day)
+VALUES ('Rick Riordan', '2018-07-07');
+INSERT INTO tb_author(name, birth_day)
+VALUES ('James Dashner', '2018-07-07');
+
+INSERT INTO tb_publishing_company(name, adress, telephone)
+VALUES ('Pipoca e nanquim', 'Rua Barual', 1122323455);
+
+INSERT INTO tb_user(first_name, last_name, email, password, role)
+VALUES ('Guilherme', 'Tarifa', 'Vieira@gmail.gloob', '1234554', 'MANAGER');
+
+INSERT INTO tb_book(title, author_id, isbn, status, publishing_company_id)
+VALUES ('Salem', 1, '23124132.32123', 'READING', 1);
+INSERT INTO tb_book(title, author_id, isbn, status, publishing_company_id)
+VALUES ('Harry Potter e a Câmara Secreta', 2, '23111111.31111', 'TO_READ', 1);
+INSERT INTO tb_book(title, author_id, isbn, status, publishing_company_id)
+VALUES ('A Dança dos Dragões', 3, '222224132.322222', 'READ', 1);
+INSERT INTO tb_book(title, author_id, isbn, status, publishing_company_id)
+VALUES ('Filho de Netuno', 4, '333333333.333333', 'READ', 1);
+INSERT INTO tb_book(title, author_id, isbn, status, publishing_company_id)
+VALUES ('Maze Runner', 5, '2344443211.32444', 'TO_READ', 1);

@@ -38,8 +38,11 @@ public class BookServiceImpl implements BookService {
         Page<Book> books = bookRepository.findAll(pageable);
         if (books.isEmpty()) throw new NoContentList("Lista vazia");
         List<BookResponseDTO> bookDto = books.getContent().stream().map(Mapper::BookMapperDTO).toList();
-        Page<BookResponseDTO> response = new PageImpl<>(bookDto, pageable, books.getTotalElements());
+        Page<BookResponseDTO> response =
+                new PageImpl<>(bookDto, pageable, books.getTotalElements());
         return ResponseEntity.status(200).body(response);
+
+        
     }
 
 

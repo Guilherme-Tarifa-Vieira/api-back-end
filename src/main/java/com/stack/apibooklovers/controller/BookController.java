@@ -25,7 +25,7 @@ public class BookController {
     @GetMapping
     public ResponseEntity<Page<BookResponseDTO>> getAllBooks(
             @ParameterObject
-            @PageableDefault(size = 20, sort = "title", direction = Sort.Direction.DESC) Pageable pageable) {
+            @PageableDefault(size = 20, sort = "title", direction = Sort.Direction.ASC) Pageable pageable) {
         return ResponseEntity.ok(bookService.getAllBooks(pageable).getBody());
     }
 
@@ -44,7 +44,7 @@ public class BookController {
     public ResponseEntity<Page<BookResponseDTO>> filter(
             @RequestParam(required = false) String title,
             @ParameterObject
-            @PageableDefault(size = 20, sort = "title", direction = Sort.Direction.DESC) Pageable pageable) {
+            @PageableDefault(size = 20, sort = "title", direction = Sort.Direction.ASC) Pageable pageable) {
         return ResponseEntity.ok(bookService.filter(title, pageable).getBody());
     }
 
