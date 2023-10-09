@@ -20,7 +20,7 @@ public class PublishingCompany {
 
     private String name;
 
-    private String adress;
+    private String address;
 
     private Integer telephone;
 

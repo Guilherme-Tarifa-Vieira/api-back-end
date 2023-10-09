@@ -7,7 +7,6 @@ CREATE TABLE tb_user
     password   VARCHAR(120)          NOT NULL,
     role       VARCHAR(55)           NOT NULL,
     CONSTRAINT pk_user PRIMARY KEY (id)
-
 );
 
 CREATE TABLE tb_author
@@ -16,6 +15,15 @@ CREATE TABLE tb_author
     name      VARCHAR(155)          NOT NULL,
     birth_day DATE                  NULL,
     CONSTRAINT pk_author PRIMARY KEY (id)
+);
+
+CREATE TABLE tb_publishing_company
+(
+    id        BIGINT AUTO_INCREMENT NOT NULL,
+    name      VARCHAR(155)          NOT NULL,
+    address   VARCHAR(255)          NOT NULL,
+    telephone INT,
+    CONSTRAINT pk_publishing PRIMARY KEY (id)
 );
 
 CREATE TABLE tb_book
@@ -45,6 +53,12 @@ ALTER TABLE tb_book
 ALTER TABLE tb_book
     ADD CONSTRAINT fk_author FOREIGN KEY (author_id) REFERENCES tb_author (id);
 
+
+ALTER TABLE tb_book
+    ADD COLUMN publishing_company_id BIGINT NULL;
+
+ALTER TABLE tb_book
+    ADD CONSTRAINT fk_publishing FOREIGN KEY (publishing_company_id) REFERENCES tb_publishing_company (id);
 
 
 INSERT INTO tb_author(name, birth_day)
