@@ -23,8 +23,6 @@ public class Author {
     private String name;
     private LocalDate birth_day;
     @OneToMany(mappedBy = "author")
-    @JsonIgnoreProperties("author")
-    @JsonIgnore
     List<Book> books;
 
     public Author(String name, LocalDate birth_day) {
