@@ -2,9 +2,10 @@ package com.stack.apibooklovers.service.publishingService;
 
 import com.stack.apibooklovers.domain.publishing.PublishingCompany;
 import com.stack.apibooklovers.domain.publishing.PublishingCompanyResponseDTO;
-import com.stack.apibooklovers.exception.NoContentList;
-import com.stack.apibooklovers.mapper.Mapper;
+import com.stack.apibooklovers.infraestructure.exception.NoContentList;
 import com.stack.apibooklovers.repository.PublishingCompanyRepository;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -17,11 +18,13 @@ import java.util.List;
 public class PublishingCompanyServiceImpl implements PublishingCompanyService {
 
 
-    private final PublishingCompanyRepository publishingCompanyRepository;
+    private PublishingCompanyRepository publishingCompanyRepository;
+    private ModelMapper modelMapper;
 
-
-    public PublishingCompanyServiceImpl(PublishingCompanyRepository publishingCompanyRepository) {
+    @Autowired
+    public PublishingCompanyServiceImpl(PublishingCompanyRepository publishingCompanyRepository, ModelMapper modelMapper) {
         this.publishingCompanyRepository = publishingCompanyRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -30,7 +33,7 @@ public class PublishingCompanyServiceImpl implements PublishingCompanyService {
         if (publis.isEmpty())
             throw new NoContentList("Lista Vazia!");
 
-        List<PublishingCompanyResponseDTO> publisDto = publis.getContent().stream().map(Mapper::PublishingMapperDTO).toList();
+        List<PublishingCompanyResponseDTO> publisDto = publis.getContent().stream().map(publiss -> modelMapper.map(publiss, PublishingCompanyResponseDTO.class)).toList();
         Page<PublishingCompanyResponseDTO> response = new PageImpl<>(publisDto, pageable, publis.getTotalElements());
 
         return ResponseEntity.status(200).body(response);
@@ -41,8 +44,6 @@ public class PublishingCompanyServiceImpl implements PublishingCompanyService {
     public ResponseEntity<PublishingCompanyResponseDTO> getPublishingCompanyById() {
         return null;
     }
-
-
 
 
 }
