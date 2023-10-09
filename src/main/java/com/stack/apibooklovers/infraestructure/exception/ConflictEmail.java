@@ -1,11 +1,12 @@
-package com.stack.apibooklovers.exception;
+package com.stack.apibooklovers.infraestructure.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.CONFLICT)
-public class ConflictIsbn extends RuntimeException {
-    public ConflictIsbn(String message) {
+public class ConflictEmail extends RuntimeException {
+    public ConflictEmail(String message) {
         super(message);
     }
 }
+
