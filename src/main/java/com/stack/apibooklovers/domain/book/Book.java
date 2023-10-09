@@ -2,6 +2,7 @@ package com.stack.apibooklovers.domain.book;
 
 
 import com.stack.apibooklovers.domain.author.Author;
+import com.stack.apibooklovers.domain.publishing.PublishingCompany;
 import com.stack.apibooklovers.domain.user.User;
 import com.stack.apibooklovers.enums.BookStatus;
 import jakarta.persistence.*;
@@ -26,6 +27,10 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "author_id")
     private Author author;
+
+    @ManyToOne
+    @JoinColumn(name = "publishing_company_id")
+    private PublishingCompany publishingCompany;
     @Column(name = "isbn", unique = true)
     private String isbn;
     @ManyToMany

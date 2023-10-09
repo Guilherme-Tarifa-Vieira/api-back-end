@@ -1,7 +1,5 @@
 package com.stack.apibooklovers.domain.author;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.stack.apibooklovers.domain.book.Book;
 import jakarta.persistence.*;
 import lombok.*;
