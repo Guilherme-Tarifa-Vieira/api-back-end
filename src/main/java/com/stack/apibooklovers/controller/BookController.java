@@ -25,18 +25,18 @@ public class BookController {
     @GetMapping
     public ResponseEntity<Page<BookResponseDTO>> getAllBooks(
             @ParameterObject
-            @PageableDefault(size = 20, sort = "title", direction = Sort.Direction.DESC) Pageable pageable) {
-        return ResponseEntity.ok(bookService.getAllBooks(pageable).getBody());
+            @PageableDefault(size = 20, sort = "title", direction = Sort.Direction.ASC) Pageable pageable) {
+        return ResponseEntity.ok(bookService.getAllBooks(pageable));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<BookResponseDTO> bookById(@Valid @PathVariable Long id) {
-        return ResponseEntity.ok(bookService.getBookById(id).getBody());
+        return ResponseEntity.ok(bookService.getBookById(id));
     }
 
     @PostMapping
     public ResponseEntity<BookResponseDTO> createBook(@Valid @RequestBody BookForm form) {
-        return ResponseEntity.status(201).body(bookService.createBook(form).getBody());
+        return ResponseEntity.status(201).body(bookService.createBook(form));
     }
 
 
@@ -45,7 +45,7 @@ public class BookController {
             @RequestParam(required = false) String title,
             @ParameterObject
             @PageableDefault(size = 20, sort = "title", direction = Sort.Direction.DESC) Pageable pageable) {
-        return ResponseEntity.ok(bookService.filter(title, pageable).getBody());
+        return ResponseEntity.ok(bookService.filter(title, pageable));
     }
 
 

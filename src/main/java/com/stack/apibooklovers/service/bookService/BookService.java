@@ -8,13 +8,13 @@ import org.springframework.http.ResponseEntity;
 
 public interface BookService {
 
-    public ResponseEntity<Page<BookResponseDTO>> getAllBooks(Pageable pageable);
+    Page<BookResponseDTO> getAllBooks(Pageable pageable);
 
-    public ResponseEntity<BookResponseDTO> getBookById(Long id);
+    BookResponseDTO getBookById(Long id);
 
-    public ResponseEntity<BookResponseDTO> createBook(BookForm form);
+    BookResponseDTO createBook(BookForm form);
 
-    public ResponseEntity<Page<BookResponseDTO>> filter(String title, Pageable pageable);
+    Page<BookResponseDTO> filter(String title, Pageable pageable);
 
 
 }
